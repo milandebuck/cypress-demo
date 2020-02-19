@@ -1,0 +1,28 @@
+{
+  "npmScope": "cypress-demo",
+  "implicitDependencies": {
+    "workspace.json": "*",
+    "package.json": {
+      "dependencies": "*",
+      "devDependencies": "*"
+    },
+    "tsconfig.json": "*",
+    "tslint.json": "*",
+    "nx.json": "*"
+  },
+  "projects": {
+    "todo": {
+      "tags": []
+    },
+    "todo-e2e": {
+      "tags": [],
+      "implicitDependencies": ["todo"]
+    },
+    "api": {
+      "tags": []
+    },
+    "api-interfaces": {
+      "tags": []
+    }
+  }
+}
