@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { Request, Response, Router } from 'express';
 class ToDoController {
   public path = '/todo';
   public router = Router();
@@ -8,5 +8,5 @@ class ToDoController {
    */
   constructor() {}
 
-  getTodo;
+  getTodo(req: Request, res: Response) {}
 }

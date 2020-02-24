@@ -1,3 +1,1 @@
-export interface Message {
-  message: string;
-}
+export * from './todo-interface';

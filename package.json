@@ -27,11 +27,13 @@
   },
   "private": true,
   "dependencies": {
+    "body-parser": "^1.19.0",
     "document-register-element": "1.13.1",
     "express": "4.17.1",
     "nano": "^8.1.0",
     "react": "16.12.0",
-    "react-dom": "16.12.0"
+    "react-dom": "16.12.0",
+    "uuid": "^7.0.0"
   },
   "devDependencies": {
     "@nrwl/workspace": "9.0.1",
