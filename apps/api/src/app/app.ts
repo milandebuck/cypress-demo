@@ -1,28 +1,20 @@
+import * as bodyParser from 'body-parser';
 import * as express from 'express';
+import todoController from './controllers/todo.controller';
 import { initCouchDb } from './database/create_db';
 
-class App {
-  public express;
+const app = express();
 
-  constructor() {
-    this.express = express();
-    this.initDb();
-    this.mountRoutes();
-  }
+(async () => {
+  app.use(bodyParser.json());
 
-  private initDb(): void {
-    initCouchDb().then(() => console.log('database initialized'));
-  }
+  await initCouchDb();
+  console.log('database initialized');
 
-  private mountRoutes(): void {
-    const router = express.Router();
-    router.get('/', (req, res) => {
-      res.json({
-        message: 'Hello World!'
-      });
-    });
-    this.express.use('/', router);
-  }
-}
+  app.use('', [todoController]);
+  console.log('routes initialized');
+})()
+  .then(() => console.log('app ready'))
+  .catch(console.error);
 
-export default new App().express;
+export default app;
