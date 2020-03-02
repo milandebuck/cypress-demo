@@ -32,7 +32,9 @@
     "express": "4.17.1",
     "nano": "^8.1.0",
     "react": "16.12.0",
+    "react-beautiful-dnd": "^13.0.0",
     "react-dom": "16.12.0",
+    "styled-components": "^5.0.1",
     "uuid": "^7.0.0"
   },
   "devDependencies": {
