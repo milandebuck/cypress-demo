@@ -1,5 +1,5 @@
 export enum Status {
-  New = 1,
-  Active = 2,
-  Done = 3
+  New = 0,
+  Active = 1,
+  Done = 2
 }

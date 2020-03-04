@@ -1,44 +1,44 @@
-import { Status, Task } from '@cypress-demo/api-interfaces';
+import { Status } from '@cypress-demo/api-interfaces';
 import React from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { Column } from './column';
-import { columnOrder, taskList } from './data';
+import data from './data';
 
-class App extends React.Component<
-  {},
-  {
-    columnOrder: Status[];
-    taskList: Task[];
-  }
-> {
-  constructor(props) {
-    super(props);
-    this.state = {
-      columnOrder,
-      taskList: []
+class App extends React.Component {
+  state = data;
+  onDragEnd = ({ destination, source, draggableId }) => {
+    if (
+      !destination ||
+      (destination.index === source.index &&
+        destination.droppableId === source.droppableId)
+    ) {
+      return;
+    }
+
+    const column = this.state.columns[source.droppableId];
+    const newOrder = Array.from(column.items);
+    newOrder.splice(source.index, 1);
+    newOrder.splice(destination.index, 0, draggableId);
+    const reOrderedColumn = {
+      ...column,
+      items: newOrder
     };
-  }
 
-  componentDidMount() {
-    setTimeout(() => {
-      this.setState(state => ({
-        columnOrder: state.columnOrder,
-        taskList
-      }));
-    }, 1000);
-  }
-  onDragEnd = result => {
-    //todo
+    this.setState({
+      ...this.state,
+      columns: {
+        ...this.state.columns,
+        [Status[column.columnId]]: reOrderedColumn
+      }
+    });
   };
 
   render() {
     return (
       <DragDropContext onDragEnd={this.onDragEnd}>
         {this.state.columnOrder.map((status: Status) => {
-          const taskList = this.state.taskList.filter(
-            task => task.status === status
-          );
-
+          const column = this.state.columns[Status[status]];
+          const taskList = column.items.map(item => this.state.taskList[item]);
           return (
             <Column
               key={status}
