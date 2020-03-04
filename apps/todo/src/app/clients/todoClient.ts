@@ -1,10 +1,10 @@
-import { Todo } from '@cypress-demo/api-interfaces';
+import { Task } from '@cypress-demo/api-interfaces';
 
 const apiUrl = '/todo';
 
-async function get(id: string): Promise<Todo | null> {
+async function get(id: string): Promise<Task | null> {
   const res = await fetch(`${apiUrl}/${id}`);
-  return res ? ((await res.json()) as Todo) : null;
+  return res ? ((await res.json()) as Task) : null;
 }
 
 async function remove(id: string, rev: string): Promise<void> {
@@ -13,12 +13,12 @@ async function remove(id: string, rev: string): Promise<void> {
   });
 }
 
-async function add(todo: Todo): Promise<Todo | null> {
+async function add(todo: Task): Promise<Task | null> {
   const res = await fetch(`${apiUrl}`, {
     method: 'post',
     body: (todo as unknown) as BodyInit
   });
-  return res ? ((await res.json()) as Todo) : null;
+  return res ? ((await res.json()) as Task) : null;
 }
 
 export const todoClient = {

@@ -1,2 +1,2 @@
 export * from './status-enum';
-export * from './todo-interface';
+export * from './task-interface';

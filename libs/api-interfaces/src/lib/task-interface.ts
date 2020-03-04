@@ -1,6 +1,6 @@
 import { Status } from './status-enum';
 
-export interface Todo {
+export interface Task {
   _id: string;
   title: string;
   status: Status;
