@@ -8,12 +8,12 @@ export const taskList = {
   },
   'todo-2': {
     _id: 'todo-2',
-    status: Status.New,
+    status: Status.Active,
     title: 'todo-2'
   },
   'todo-3': {
     _id: 'todo-3',
-    status: Status.New,
+    status: Status.Active,
     title: 'todo-3'
   },
   'todo-4': {
@@ -28,12 +28,20 @@ export const taskList = {
   }
 };
 
-export const columnOrder = [Status.New];
+export const columnOrder = [Status.New, Status.Active, Status.Done];
 
 export const columns = {
   New: {
     columnId: Status.New,
-    items: ['todo-1', 'todo-2', 'todo-3', 'todo-4', 'todo-5']
+    items: ['todo-1', 'todo-4', 'todo-5']
+  },
+  Active: {
+    columnId: Status.Active,
+    items: ['todo-2', 'todo-3']
+  },
+  Done: {
+    columnId: Status.Done,
+    items: []
   }
 };
 

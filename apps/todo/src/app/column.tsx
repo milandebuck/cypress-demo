@@ -1,13 +1,14 @@
-import { Task } from '@cypress-demo/api-interfaces';
-import React from 'react';
 import { Droppable } from 'react-beautiful-dnd';
-import styled from 'styled-components';
+import React from 'react';
+import { Task } from '@cypress-demo/api-interfaces';
 import { TaskComponent } from './task';
+import styled from 'styled-components';
 
 const Container = styled.div`
   margin: 8px;
   border: 1px solid lightGrey;
   border-radius: 2px;
+  min-width: 200px;
 `;
 
 const Title = styled.h3`

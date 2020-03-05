@@ -1,8 +1,15 @@
-import { Status } from '@cypress-demo/api-interfaces';
-import React from 'react';
-import { DragDropContext } from 'react-beautiful-dnd';
 import { Column } from './column';
+import { DragDropContext } from 'react-beautiful-dnd';
+import React from 'react';
+import { Status } from '@cypress-demo/api-interfaces';
 import data from './data';
+import styled from 'styled-components';
+
+const Container = styled.div`
+  display: flex;
+  flex: 1;
+  justify-content: center;
+`;
 
 class App extends React.Component {
   state = data;
@@ -14,21 +21,55 @@ class App extends React.Component {
     ) {
       return;
     }
-
-    const column = this.state.columns[source.droppableId];
-    const newOrder = Array.from(column.items);
-    newOrder.splice(source.index, 1);
-    newOrder.splice(destination.index, 0, draggableId);
-    const reOrderedColumn = {
-      ...column,
-      items: newOrder
+    const { columns } = this.state;
+    let newColumnState = {
+      ...columns
     };
+
+    //remove from source
+    const sourceColumn = columns[source.droppableId];
+    const newSource = Array.from(sourceColumn.items);
+    newSource.splice(source.index, 1);
+    if (source.droppableId === destination.droppableId) {
+      //place item in state
+      newSource.splice(destination.index, 0, draggableId);
+      const reOrderedColumn = {
+        ...sourceColumn,
+        items: newSource
+      };
+
+      //set new state
+      newColumnState = {
+        ...columns,
+        [Status[sourceColumn.columnId]]: reOrderedColumn
+      };
+    } else {
+      const destColumn = columns[destination.droppableId];
+      const newDest = Array.from(destColumn.items);
+
+      newDest.splice(destination.index, 0, draggableId);
+
+      const reOrderedDest = {
+        ...destColumn,
+        items: newDest
+      };
+
+      const reOrderedSource = {
+        ...sourceColumn,
+        items: newSource
+      };
+
+      newColumnState = {
+        ...columns,
+        [Status[sourceColumn.columnId]]: reOrderedSource,
+        [Status[destColumn.columnId]]: reOrderedDest
+      };
+    }
 
     this.setState({
       ...this.state,
       columns: {
-        ...this.state.columns,
-        [Status[column.columnId]]: reOrderedColumn
+        ...newColumnState
       }
     });
   };
@@ -36,17 +77,21 @@ class App extends React.Component {
   render() {
     return (
       <DragDropContext onDragEnd={this.onDragEnd}>
-        {this.state.columnOrder.map((status: Status) => {
-          const column = this.state.columns[Status[status]];
-          const taskList = column.items.map(item => this.state.taskList[item]);
-          return (
-            <Column
-              key={status}
-              title={Status[status]}
-              tasks={taskList}
-            ></Column>
-          );
-        })}
+        <Container>
+          {this.state.columnOrder.map((status: Status) => {
+            const column = this.state.columns[Status[status]];
+            const taskList = column.items.map(
+              item => this.state.taskList[item]
+            );
+            return (
+              <Column
+                key={status}
+                title={Status[status]}
+                tasks={taskList}
+              ></Column>
+            );
+          })}
+        </Container>
       </DragDropContext>
     );
   }
