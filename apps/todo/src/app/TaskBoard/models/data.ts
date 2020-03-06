@@ -31,15 +31,15 @@ export const taskList = {
 export const columnOrder = [Status.New, Status.Active, Status.Done];
 
 export const columns = {
-  New: {
+  [Status.New]: {
     columnId: Status.New,
     items: ['todo-1', 'todo-4', 'todo-5']
   },
-  Active: {
+  [Status.Active]: {
     columnId: Status.Active,
     items: ['todo-2', 'todo-3']
   },
-  Done: {
+  [Status.Done]: {
     columnId: Status.Done,
     items: []
   }

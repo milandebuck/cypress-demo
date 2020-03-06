@@ -1,1 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
+@import './app/app.scss';
+body {
+  font-family: 'Roboto', sans-serif;
+  font-size: 62.5%;
+}
