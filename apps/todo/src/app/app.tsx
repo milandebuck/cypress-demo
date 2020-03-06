@@ -86,6 +86,7 @@ class App extends React.Component {
             return (
               <Column
                 key={status}
+                columnStatus={status}
                 title={Status[status]}
                 tasks={taskList}
               ></Column>

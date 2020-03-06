@@ -1,9 +1,9 @@
-import { Task } from '@cypress-demo/api-interfaces';
-import React from 'react';
 import { Draggable } from 'react-beautiful-dnd';
+import React from 'react';
+import { Task } from '@cypress-demo/api-interfaces';
 import styled from 'styled-components';
 
-const Container = styled.div`
+export const TaskContainer = styled.div`
   margin-bottom: 8px;
   padding: 8px;
   border: 1px solid lightGrey;
@@ -19,13 +19,13 @@ export class TaskComponent extends React.Component<{
     return (
       <Draggable draggableId={this.props.task._id} index={this.props.index}>
         {provided => (
-          <Container
+          <TaskContainer
             {...provided.draggableProps}
             {...provided.dragHandleProps}
             ref={provided.innerRef}
           >
             {this.props.task.title}
-          </Container>
+          </TaskContainer>
         )}
       </Draggable>
     );

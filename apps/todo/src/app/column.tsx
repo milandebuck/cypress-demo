@@ -1,6 +1,8 @@
+import { Status, Task } from '@cypress-demo/api-interfaces';
+
+import { AddTask } from './add-task';
 import { Droppable } from 'react-beautiful-dnd';
 import React from 'react';
-import { Task } from '@cypress-demo/api-interfaces';
 import { TaskComponent } from './task';
 import styled from 'styled-components';
 
@@ -23,6 +25,7 @@ const List = styled.div`
 
 export class Column extends React.Component<{
   title: string;
+  columnStatus: Status;
   tasks: Task[];
 }> {
   render() {
@@ -41,6 +44,7 @@ export class Column extends React.Component<{
                   ></TaskComponent>
                 ))}
                 {provided.placeholder}
+                {this.props.columnStatus === Status.New && <AddTask></AddTask>}
               </List>
             );
           }}
