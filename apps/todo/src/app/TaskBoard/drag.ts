@@ -88,6 +88,7 @@ const addTaskToColumn = (
 const updateTask = async (task: Task, status: Status): Promise<Task> => {
   return await todoClient.update({
     ...task,
-    status
+    status,
+    lastUpdated: new Date()
   });
 };

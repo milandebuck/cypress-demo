@@ -37,7 +37,8 @@ export class AddTask extends React.Component<
       .add({
         title,
         content,
-        status: Status.New
+        status: Status.New,
+        lastUpdated: new Date()
       })
       .then((res: Task) => {
         const { onChange } = this.props;

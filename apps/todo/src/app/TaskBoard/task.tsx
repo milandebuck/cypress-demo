@@ -2,6 +2,7 @@ import { Task } from '@cypress-demo/api-interfaces';
 import React from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import styled from 'styled-components';
+import { TaskDate } from './date';
 
 export const TaskContainer = styled.div`
   margin-bottom: 8px;
@@ -10,12 +11,23 @@ export const TaskContainer = styled.div`
   border-radius: 2px;
   background-color: ${props => (props.isDragging ? 'lightgreen' : 'white')};
 `;
+export const TaskTitle = styled.h3`
+  padding-bottom: 4px;
+  margin: 0;
+`;
+
+export const TaskContent = styled.p`
+  color: grey;
+  font-style: italic;
+  margin: 0;
+`;
 
 export class TaskComponent extends React.Component<{
   task: Task;
   index: number;
 }> {
   render() {
+    const { task } = this.props;
     return (
       <Draggable draggableId={this.props.task._id} index={this.props.index}>
         {(provided, snapshot) => (
@@ -25,7 +37,9 @@ export class TaskComponent extends React.Component<{
             ref={provided.innerRef}
             isDragging={snapshot.isDragging}
           >
-            {this.props.task.title}
+            <TaskTitle>{task.title}</TaskTitle>
+            <TaskDate date={task.lastUpdated}></TaskDate>
+            <TaskContent>{task.content}</TaskContent>
           </TaskContainer>
         )}
       </Draggable>

@@ -6,4 +6,5 @@ export interface Task {
   title: string;
   status: Status;
   content: string;
+  lastUpdated: Date;
 }
