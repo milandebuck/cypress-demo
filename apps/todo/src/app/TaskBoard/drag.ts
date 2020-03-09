@@ -1,10 +1,11 @@
+import { Status, Task } from '@cypress-demo/api-interfaces';
 import { DropResult } from 'react-beautiful-dnd';
+import { todoClient } from './../clients/todoClient';
 import { BoardState, Columns, TaskColumn } from './models/board-state';
-
-export function handleOnDragEnd(
+export async function handleOnDragEnd(
   state: BoardState,
   dragResult: DropResult
-): BoardState {
+): Promise<BoardState> {
   const { destination, source, draggableId } = dragResult;
   if (hasChanged(source, destination)) {
     return;
@@ -15,6 +16,11 @@ export function handleOnDragEnd(
     ...columns
   };
 
+  //update backend
+  let task = state.taskList[draggableId];
+
+  task = await updateTask(task, _columns[destination.droppableId].columnId);
+
   const sourceColumn = removeTaskFromColumn(
     _columns[source.droppableId],
     source.index
@@ -24,6 +30,7 @@ export function handleOnDragEnd(
     ..._columns,
     [sourceColumn.columnId]: sourceColumn
   };
+
   const destColumn = addTaskToColumn(
     _columns[destination.droppableId],
     draggableId,
@@ -38,6 +45,10 @@ export function handleOnDragEnd(
     ...state,
     columns: {
       ..._columns
+    },
+    taskList: {
+      ...state.taskList,
+      [task._id]: task
     }
   };
 }
@@ -72,4 +83,11 @@ const addTaskToColumn = (
     ...column,
     items: res
   };
+};
+
+const updateTask = async (task: Task, status: Status): Promise<Task> => {
+  return await todoClient.update({
+    ...task,
+    status
+  });
 };

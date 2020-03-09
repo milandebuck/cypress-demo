@@ -16,9 +16,18 @@ async function getTodo(req: Request, res: Response) {
   } else res.status(404);
 }
 
+async function getTodos(req: Request, res: Response) {
+  const result = await todoRepo.getAll();
+  console.log(result);
+  if (result) {
+    res.status(200).json(result);
+  } else res.status(204);
+}
+
 async function addTodo(req: Request, res: Response) {
+  console.log(req);
   if (req.body) {
-    const result = todoRepo.create(req.body);
+    const result = await todoRepo.create(req.body);
     if (result) {
       res.status(200).json(result);
     } else res.status(204);
@@ -35,8 +44,18 @@ async function removeTodo(req: Request, res: Response) {
   } else res.status(404);
 }
 
+async function updateTodo(req: Request, res: Response) {
+  const { body } = req;
+  if (body) {
+    const result = await todoRepo.update(body);
+    res.status(200).json(result);
+  } else res.status(204);
+}
+
+router.get(basePath, asyncMiddleware(getTodos));
 router.get(`${basePath}/:id`, asyncMiddleware(getTodo));
 router.delete(`${basePath}/:id//rev`, asyncMiddleware(removeTodo));
-router.post(`basePath`, asyncMiddleware(addTodo));
+router.post(basePath, asyncMiddleware(addTodo));
+router.put(basePath, asyncMiddleware(updateTodo));
 
 export default router;

@@ -1,6 +1,7 @@
-import { Task } from '@cypress-demo/api-interfaces';
+import { Status, Task } from '@cypress-demo/api-interfaces';
 import React from 'react';
 import styled from 'styled-components';
+import { todoClient } from './../clients/todoClient';
 
 export const TaskContainer = styled.div`
   margin-bottom: 8px;
@@ -30,7 +31,20 @@ export class AddTask extends React.Component<
   handleSubmit = (event: Event) => {
     //TODO
     console.log('submit');
+    const { title, content } = this.state;
     event.preventDefault();
+    todoClient
+      .add({
+        title,
+        content,
+        status: Status.New
+      })
+      .then((res: Task) => {
+        const { onChange } = this.props;
+        if (onChange) {
+          onChange(res);
+        }
+      });
   };
 
   handleChange = ({ target }) => {
