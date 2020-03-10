@@ -31,7 +31,7 @@ export class Column extends React.Component<{
 }> {
   render() {
     return (
-      <Container>
+      <Container data-cy={`column-${this.props.columnStatus}`}>
         <Title>{this.props.title}</Title>
         <Droppable droppableId={this.props.title}>
           {(provided, snapshot) => {
@@ -40,6 +40,7 @@ export class Column extends React.Component<{
                 ref={provided.innerRef}
                 {...provided.droppableProps}
                 isDraggingOver={snapshot.isDraggingOver}
+                data-cy="drop-box"
               >
                 {this.props.tasks.map((task, index) => (
                   <TaskComponent

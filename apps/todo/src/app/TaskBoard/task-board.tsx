@@ -65,9 +65,10 @@ class TaskBoard extends React.Component<{}, BoardState> {
   };
 
   render() {
+    console.log(this.props);
     return (
       <DragDropContext onDragEnd={this.onDragEnd}>
-        <Container>
+        <Container className="task-board" data-cy="task-board">
           {this.state.columnOrder.map((status: Status, index: number) => {
             const column = this.state.columns[status];
             const taskList = column.items.map(

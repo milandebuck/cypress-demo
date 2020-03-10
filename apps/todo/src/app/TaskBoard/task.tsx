@@ -27,7 +27,7 @@ export class TaskComponent extends React.Component<{
   index: number;
 }> {
   render() {
-    const { task } = this.props;
+    const { task, index } = this.props;
     return (
       <Draggable draggableId={this.props.task._id} index={this.props.index}>
         {(provided, snapshot) => (
@@ -36,10 +36,11 @@ export class TaskComponent extends React.Component<{
             {...provided.dragHandleProps}
             ref={provided.innerRef}
             isDragging={snapshot.isDragging}
+            data-cy={`task-${index}`}
           >
-            <TaskTitle>{task.title}</TaskTitle>
+            <TaskTitle data-cy="task-title">{task.title}</TaskTitle>
             <TaskDate date={task.lastUpdated}></TaskDate>
-            <TaskContent>{task.content}</TaskContent>
+            <TaskContent data-cy="task-content">{task.content}</TaskContent>
           </TaskContainer>
         )}
       </Draggable>

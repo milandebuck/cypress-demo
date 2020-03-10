@@ -16,11 +16,6 @@ export async function handleOnDragEnd(
     ...columns
   };
 
-  //update backend
-  let task = state.taskList[draggableId];
-
-  task = await updateTask(task, _columns[destination.droppableId].columnId);
-
   const sourceColumn = removeTaskFromColumn(
     _columns[source.droppableId],
     source.index
@@ -41,6 +36,11 @@ export async function handleOnDragEnd(
     ..._columns,
     [destColumn.columnId]: destColumn
   };
+
+  //update backend
+  let task = state.taskList[draggableId];
+
+  task = await updateTask(task, _columns[destination.droppableId].columnId);
   return {
     ...state,
     columns: {
